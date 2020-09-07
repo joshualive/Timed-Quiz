@@ -1,8 +1,16 @@
-// Build Timer
-const startingMinutes = 1;
-let time = startingMinutes * 60;
+const startButton = document.getElementById('start-btn')
+const nextButton = document.getElementById('next-btn')
+const questionContainerElement = document.getElementById('question-container')
+const questionElement = document.getElementById('question')
+const answerButtonsElement = document.getElementById('answer-buttons')
+const timerElement = document.getElementById('countdown')
+const quizInstructions = document.getElementById('instructions')
+const countdownElement = document.getElementById('countdown')
 
-const countdownEl = document.getElementById('countdown');
+// Build Timer
+startButton.addEventListener('click', function(){
+const startingMinutes = 2;
+let time = startingMinutes * 60;
 
 setInterval(updateCountdown, 1000);
 
@@ -12,13 +20,134 @@ function updateCountdown() {
 
     seconds = seconds < 10  ? '0' + seconds : seconds;
 
-    countdownEl.innerHTML = `${minutes}:${seconds}`;
+    countdownElement.innerHTML = `${minutes}:${seconds}`;
     time--;
     time = time < 0 ? 0 : time; 
+    }
+    timerElement.classList.remove('hide')
+});
+
+
+// Build Quiz
+let shuffledQuestions, currentQuestionIndex
+
+startButton.addEventListener('click', startGame)
+nextButton.addEventListener('click', () => {
+  currentQuestionIndex++
+  setNextQuestion()
+})
+
+function startGame() {
+  startButton.classList.add('hide')
+  shuffledQuestions = questions.sort(() => Math.random() - .5)
+  currentQuestionIndex = 0
+  questionContainerElement.classList.remove('hide')
+  quizInstructions.classList.add('hide')
+
+  setNextQuestion()
 }
 
+function setNextQuestion() {
+  resetState()
+  showQuestion(shuffledQuestions[currentQuestionIndex])
+}
 
+function showQuestion(question) {
+  questionElement.innerText = question.question
+  question.answers.forEach(answer => {
+    const button = document.createElement('button')
+    button.innerText = answer.text
+    button.classList.add('btn')
+    if (answer.correct) {
+      button.dataset.correct = answer.correct
+    }
+    button.addEventListener('click', selectAnswer)
+    answerButtonsElement.appendChild(button)
+  })
+}
 
+function resetState() {
+  clearStatusClass(document.body)
+  nextButton.classList.add('hide')
+  while (answerButtonsElement.firstChild) {
+    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+  }
+}
 
+function selectAnswer(e) {
+  const selectedButton = e.target
+  const correct = selectedButton.dataset.correct
+  setStatusClass(document.body, correct)
+  Array.from(answerButtonsElement.children).forEach(button => {
+    setStatusClass(button, button.dataset.correct)
+  })
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove('hide')
+  } else {
+    startButton.innerText = 'Restart'
+    startButton.classList.remove('hide')
+    // questionElement.innerText = `You scored TIME`
+  }
+}
 
-alert('Hello. You have 10 minutes to complete the quiz.')
+function setStatusClass(element, correct) {
+  clearStatusClass(element)
+  if (correct) {
+    element.classList.add('correct')
+  } else {
+    element.classList.add('wrong')
+  }
+}
+
+function clearStatusClass(element) {
+  element.classList.remove('correct')
+  element.classList.remove('wrong')
+}
+
+const questions = [
+  {
+    question: 'What keyword do you use to define a variable?',
+    answers: [
+      { text: 'let', correct: false },
+      { text: 'const', correct: false },
+      { text: 'var', correct: false },
+      { text: 'All of the above', correct: true }
+    ]
+  },
+  {
+    question: 'What will printIn(2+2) print to the screen?',
+    answers: [
+      { text: '2+2', correct: false },
+      { text: '4', correct: true },
+      { text: 'NaN', correct: false },
+      { text: 'undefined', correct: false }
+    ]
+  },
+  {
+    question: 'What symbol do you use to do division in JavaScript?',
+    answers: [
+      { text: '÷', correct: false },
+      { text: '*', correct: false },
+      { text: '%', correct: false },
+      { text: '/', correct: true }
+    ]
+  },
+  {
+    question: 'What can we use inside of a loop to end it?',
+    answers: [
+      { text: 'return', correct: false },
+      { text: 'break', correct: true },
+      { text: 'false', correct: false },
+      { text: 'true', correct: false }
+    ]
+  },
+  {
+    question: 'What do you need to call to ask the user of the program to enter text?',
+    answers: [
+      { text: 'printIn', correct: false },
+      { text: 'sentinel', correct: false },
+      { text: 'readLine', correct: true },
+      { text: 'getText', correct: false }
+    ]
+  }
+]
