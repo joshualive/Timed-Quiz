@@ -17,6 +17,16 @@
                 <h1>JavaScript Timed Quiz</h1>
                 <p>You have two minutes to complete the quiz. For each wrong answer, 10 seconds is deducted from your time. Your final time can be recorded at the end of the quiz. Good luck!</p>
             </div>
+
+            <div id="finished" class="hide">
+            <h1 id="finished">You've finished the quiz!</h1> 
+            <p>Please record your score below.</p>
+            <form>
+                <label for="initials">Initials:</label><br>
+                <input type="text" id="initials" name="initials">
+            </form>
+            </div>
+
             <div id ="question-container" class="hide">
                 <div id="question">Question Text</div>
                 <div id="answer-buttons" class="btn-grid">

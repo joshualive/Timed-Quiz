@@ -5,10 +5,10 @@ const questionElement = document.getElementById('question')
 const answerButtonsElement = document.getElementById('answer-buttons')
 const timerElement = document.getElementById('countdown')
 const quizInstructions = document.getElementById('instructions')
+const quizFinished = document.getElementById('finished')
 const countdownElement = document.getElementById('countdown')
 
 // Build Timer
-
 const startingMinutes = 2
 let time
 let timer
@@ -49,6 +49,7 @@ function startGame() {
   currentQuestionIndex = 0
   questionContainerElement.classList.remove('hide')
   quizInstructions.classList.add('hide')
+  quizFinished.classList.add('hide')
   setNextQuestion()
 }
 
@@ -82,6 +83,7 @@ function resetState() {
 function selectAnswer(e) {
   const selectedButton = e.target
   const correct = selectedButton.dataset.correct
+  !correct && updateCountdown(10)
   setStatusClass(document.body, correct)
   Array.from(answerButtonsElement.children).forEach(button => {
     setStatusClass(button, button.dataset.correct)
@@ -92,7 +94,8 @@ function selectAnswer(e) {
     clearInterval(timer)
     startButton.innerText = 'Restart'
     startButton.classList.remove('hide')
-    // questionElement.innerText = `You scored TIME`
+    questionContainerElement.classList.add('hide')
+    quizFinished.classList.remove('hide')
   }
 }
 
