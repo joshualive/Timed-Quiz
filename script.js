@@ -16,14 +16,10 @@ const startingMinutes = 5
 let time
 let timer
 
-function updateCountdown(wrongAnswer = 1) {
-  const minutes = Math.floor(time / 60)
-  let seconds = time % 60
-
-  seconds = seconds < 10  ? '0' + seconds : seconds
-
-  countdownElement.innerHTML = `${minutes}:${seconds}`
-  time-= (wrongAnswer)
+function updateCountdown(timeReducer = 1) {
+  
+  countdownElement.innerHTML = getFormattedTime()
+  time-= (timeReducer)
   time = time < 0 ? 0 : time
 }
 
@@ -101,23 +97,24 @@ function selectAnswer(e) {
     questionContainerElement.classList.add('hide')
     quizFinished.classList.remove('hide')
     timerElement.classList.add('hide')
+    localStorage.clear();
   }
+}
+
+function getFormattedTime () {
+  const minutes = Math.floor(time / 60)
+  let seconds = time % 60
+  seconds = seconds < 10  ? '0' + seconds : seconds
+  return `${minutes}:${seconds}`
 }
 
 function saveResults() {
   let userInitials = document.getElementById("initials").value;
-  console.log(userInitials)
   savedName.innerText = userInitials
-  
-    function saveTime() {
-      const minutes = Math.floor(time / 60)
-      let seconds = time % 60
-    
-      seconds = seconds < 10  ? '0' + seconds : seconds
-    
-      savedScore.innerHTML = `${minutes}:${seconds}`
-    }
-  saveTime()
+  let finalTime = getFormattedTime()
+  savedScore.innerHTML = finalTime
+  localStorage.setItem('Initials', userInitials);
+  localStorage.setItem('Score', finalTime);
 }
 
 function setStatusClass(element, correct) {
