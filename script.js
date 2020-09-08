@@ -8,24 +8,28 @@ const quizInstructions = document.getElementById('instructions')
 const countdownElement = document.getElementById('countdown')
 
 // Build Timer
-startButton.addEventListener('click', function(){
-const startingMinutes = 2;
-let time = startingMinutes * 60;
 
-setInterval(updateCountdown, 1000);
+const startingMinutes = 2
+let time
+let timer
 
-function updateCountdown() {
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
+function updateCountdown(wrongAnswer = 1) {
+  const minutes = Math.floor(time / 60)
+  let seconds = time % 60
 
-    seconds = seconds < 10  ? '0' + seconds : seconds;
+  seconds = seconds < 10  ? '0' + seconds : seconds
 
-    countdownElement.innerHTML = `${minutes}:${seconds}`;
-    time--;
-    time = time < 0 ? 0 : time; 
-    }
-    timerElement.classList.remove('hide')
-});
+  countdownElement.innerHTML = `${minutes}:${seconds}`
+  time-= (wrongAnswer)
+  time = time < 0 ? 0 : time
+}
+
+function initializeTimer(){
+  time = startingMinutes * 60
+  timer = setInterval(updateCountdown, 1000)
+  updateCountdown()
+  timerElement.classList.remove('hide')
+}
 
 
 // Build Quiz
@@ -38,12 +42,13 @@ nextButton.addEventListener('click', () => {
 })
 
 function startGame() {
+  clearInterval(timer)
+  initializeTimer()
   startButton.classList.add('hide')
   shuffledQuestions = questions.sort(() => Math.random() - .5)
   currentQuestionIndex = 0
   questionContainerElement.classList.remove('hide')
   quizInstructions.classList.add('hide')
-
   setNextQuestion()
 }
 
@@ -84,6 +89,7 @@ function selectAnswer(e) {
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextButton.classList.remove('hide')
   } else {
+    clearInterval(timer)
     startButton.innerText = 'Restart'
     startButton.classList.remove('hide')
     // questionElement.innerText = `You scored TIME`
