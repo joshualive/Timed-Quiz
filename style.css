@@ -90,5 +90,35 @@ body.wrong {
 }
 
 #initials {
+    margin-bottom: 10px;
+}
+
+#save-btn {
     margin-bottom: 20px;
+}
+
+#scoreTable {
+    font-family: "omnes-pro", "Open Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 20px;
+}
+  
+#scoreTable td, #scoreTable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+  
+#scoreTable tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+  
+#scoreTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #1e90ff;
+    color: white;
 }

@@ -7,9 +7,12 @@ const timerElement = document.getElementById('countdown')
 const quizInstructions = document.getElementById('instructions')
 const quizFinished = document.getElementById('finished')
 const countdownElement = document.getElementById('countdown')
+const savedName = document.getElementById('savedName')
+const savedScore = document.getElementById('savedScore')
+const saveButton = document.getElementById('save-btn')
 
 // Build Timer
-const startingMinutes = 2
+const startingMinutes = 5
 let time
 let timer
 
@@ -36,6 +39,7 @@ function initializeTimer(){
 let shuffledQuestions, currentQuestionIndex
 
 startButton.addEventListener('click', startGame)
+saveButton.addEventListener('click', saveResults)
 nextButton.addEventListener('click', () => {
   currentQuestionIndex++
   setNextQuestion()
@@ -99,6 +103,11 @@ function selectAnswer(e) {
   }
 }
 
+function saveResults() {
+  let userInitials = document.getElementById("initials").value;
+  console.log(userInitials)
+}
+
 function setStatusClass(element, correct) {
   clearStatusClass(element)
   if (correct) {
@@ -115,7 +124,7 @@ function clearStatusClass(element) {
 
 const questions = [
   {
-    question: 'What keyword do you use to define a variable?',
+    question: 'What keyword can you use to define a variable?',
     answers: [
       { text: 'let', correct: false },
       { text: 'const', correct: false },
