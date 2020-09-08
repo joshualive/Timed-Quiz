@@ -51,6 +51,7 @@ function startGame() {
   quizInstructions.classList.add('hide')
   quizFinished.classList.add('hide')
   setNextQuestion()
+  localStorage.clear();
 }
 
 function setNextQuestion() {
@@ -97,7 +98,6 @@ function selectAnswer(e) {
     questionContainerElement.classList.add('hide')
     quizFinished.classList.remove('hide')
     timerElement.classList.add('hide')
-    localStorage.clear();
   }
 }
 
