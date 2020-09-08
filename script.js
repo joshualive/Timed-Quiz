@@ -100,12 +100,24 @@ function selectAnswer(e) {
     startButton.classList.remove('hide')
     questionContainerElement.classList.add('hide')
     quizFinished.classList.remove('hide')
+    timerElement.classList.add('hide')
   }
 }
 
 function saveResults() {
   let userInitials = document.getElementById("initials").value;
   console.log(userInitials)
+  savedName.innerText = userInitials
+  
+    function saveTime() {
+      const minutes = Math.floor(time / 60)
+      let seconds = time % 60
+    
+      seconds = seconds < 10  ? '0' + seconds : seconds
+    
+      savedScore.innerHTML = `${minutes}:${seconds}`
+    }
+  saveTime()
 }
 
 function setStatusClass(element, correct) {
