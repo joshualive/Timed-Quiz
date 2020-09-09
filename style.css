@@ -11,7 +11,6 @@
 }
 
 body {
-    --hue: var(--hue-neutral);
     padding: 0;
     margin: 0;
     display: flex;
@@ -19,15 +18,7 @@ body {
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background-color: hsl(var(--hue));
-}
-
-body.correct {
-    --hue: var(--hue-correct);
-}
-
-body.wrong {
-    --hue: var(--hue-wrong);
+    background-color: hsl(var(--hue-neutral));
 }
 
 .container {
@@ -61,7 +52,6 @@ body.wrong {
   
 .btn.correct {
     --hue: var(--hue-correct);
-    color: #000;
 }
   
 .btn.wrong {
