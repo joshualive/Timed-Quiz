@@ -2,6 +2,8 @@
  
 This homework assignment required building a timed JavaScript quiz. When a question is answered incorrectly, time is reduced from the remaining time. Once complete, you can save your score and save it to local storage. Restarting the quiz will clear the stored scores. 
 
+https://joshualive.github.io/Timed-Quiz/
+
 ![JavaScript quiz preview.](quizpreview.png)
 
 ## User Story
